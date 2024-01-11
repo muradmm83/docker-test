@@ -4,6 +4,10 @@
     "mongoose": "^8.0.4"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
   }
 }
