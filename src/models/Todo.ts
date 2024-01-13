@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
     title: { type: String, required: true },
@@ -12,4 +12,4 @@ schema.methods.toggle = function () {
 
 const Todo = mongoose.model("Todo", schema)
 
-module.exports = Todo
+export default Todo

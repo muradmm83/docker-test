@@ -1,7 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const Todo = require('../models/Todo')
+import express from 'express'
+import Todo from '../models/Todo'
 
+const router = express.Router()
 
 router.get('/', async (_, res) => {
     try {
@@ -28,4 +28,4 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-module.exports = router
+export default router
