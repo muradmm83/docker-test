@@ -5,8 +5,8 @@
   },
   "scripts": {
     "start": "node dist/app.js",
-    "build-uat": "npm run clean && tsc",
-    "build-prod": "npm run clean && tsc --sourceMap false",
+    "build-uat": "tsc",
+    "build-prod": "tsc --sourceMap false",
     "dev": "nodemon src/app.ts",
     "clean": "rm -r dist"
   },
