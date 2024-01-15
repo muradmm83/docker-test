@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Schema, Model, Document, model } from 'mongoose'
+import { Schema, Model, Document, model, isValidObjectId } from 'mongoose'
 
 export type TodoDocument = Document & {
     title: string;
@@ -61,7 +61,7 @@ export const getTodo = async (req: Request, res: Response) => {
     const todo = await Todo.findOne({ _id: id });
 
     if (!todo) {
-        return res.status(404).json({ message: `Todo with id "${id}" not found.` });
+        return res.status(404).json({ message: `Todo with ID "${id}" not found.` });
     }
 
     return res.status(200).json({ data: todo });
@@ -74,7 +74,7 @@ export const updateTodo = async (req: Request, res: Response) => {
         let todo = await Todo.findById<TodoDocument>(id)
 
         if (!todo) {
-            return res.status(404).json({ message: `Todo with id "${id}" not found.` })
+            return res.status(404).json({ message: `Todo with ID "${id}" not found.` })
         }
 
         await Todo.updateOne({ _id: id }, {
@@ -85,7 +85,28 @@ export const updateTodo = async (req: Request, res: Response) => {
 
         todo = await Todo.findById<TodoDocument>(id)
 
-        res.status(201).json({ data: todo });
+        res.status(200).json({ data: todo });
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+}
+
+export const removeTodo = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: `ID "${id}" is invalid` })
+        }
+
+        const todo: TodoDocument | null = await Todo.findByIdAndDelete(id)
+
+        if (!todo) {
+            return res.status(404).json({ message: `Todo with ID "${id}" not found.` })
+        }
+
+        res.status(200).json({ data: todo });
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Internal server error' })
