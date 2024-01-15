@@ -66,3 +66,28 @@ export const getTodo = async (req: Request, res: Response) => {
 
     return res.status(200).json({ data: todo });
 }
+
+export const updateTodo = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { title, desc, completed } = req.body;
+        let todo = await Todo.findById<TodoDocument>(id)
+
+        if (!todo) {
+            return res.status(404).json({ message: `Todo with id "${id}" not found.` })
+        }
+
+        await Todo.updateOne({ _id: id }, {
+            title: title || todo.title,
+            desc: desc || todo.desc,
+            completed: completed === undefined ? todo.completed : completed
+        })
+
+        todo = await Todo.findById<TodoDocument>(id)
+
+        res.status(201).json({ data: todo });
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+}
