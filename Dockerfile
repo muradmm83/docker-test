@@ -20,6 +20,8 @@ RUN npm install
 
 COPY --from=build /app/dist ./dist
 
+COPY ./.env .
+
 EXPOSE 3000
 
 ENTRYPOINT [ "npm", "start" ]
