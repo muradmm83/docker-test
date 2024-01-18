@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+ mongo:
+  image: mongo:latest
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: murad
+    MONGO_INITDB_ROOT_PASSWORD: murad
+  ports:
+    - 27017:27017
+ 
+ todo:
+  build:
+   context: .
+  ports:
+    - 8080:3000
+  depends_on:
+    - mongo
