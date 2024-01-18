@@ -1,6 +1,6 @@
 # Dockerized Todo App
 
-This a test Todo app to utilize **_Docker_** & **_Docker Compose_**.
+This is a test Todo app to utilize **_Docker_** & **_Docker Compose_**.
 
 ### Tools & Framework Used
 - Node JS.
@@ -9,7 +9,7 @@ This a test Todo app to utilize **_Docker_** & **_Docker Compose_**.
 - Mongo DB.
 
 ### Running the APP
-1. Install **_Docker_** & **_Docker Compose_** installed.
+1. Install **_Docker_** & **_Docker Compose_**.
 1. Clone this repo `git clone git@github.com:muradmm83/docker-test.git`.
 1. On your terminal, `cd` to application root directory.
 1. Type `docker-compose up -d`.
