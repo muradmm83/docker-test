@@ -29,6 +29,6 @@ Todo payload should look like this:
 {
     "title": "SOME TITLE",
     "desc": "SOME DESCRIPTION",
-    "completed": ture or false (default is false)
+    "completed": true or false (default is false)
 }
 ```
