@@ -5,9 +5,7 @@ services:
   image: mongo:latest
   environment:
     MONGO_INITDB_ROOT_USERNAME: murad
-    MONGO_INITDB_ROOT_PASSWORD: murad
-  ports:
-    - 27017:27017
+    MONGO_INITDB_ROOT_PASSWORD: murad  
  
  todo:
   build:
