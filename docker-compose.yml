@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
  mongo:
-  image: mongo:latest
+  image: mongo:4.0.8
   environment:
     MONGO_INITDB_ROOT_USERNAME: murad
     MONGO_INITDB_ROOT_PASSWORD: murad  
