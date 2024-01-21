@@ -58,6 +58,10 @@ export const getAllTodos = async (_: Request, res: Response) => {
 export const getTodo = async (req: Request, res: Response) => {
     const { id } = req.params;
 
+    if (!isValidObjectId(id)) {
+        return res.status(400).json({ message: `ID "${id}" is invalid` })
+    }
+
     const todo = await Todo.findOne({ _id: id });
 
     if (!todo) {
@@ -71,6 +75,11 @@ export const updateTodo = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { title, desc, completed } = req.body;
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({ message: `ID "${id}" is invalid` })
+        }
+
         let todo = await Todo.findById<TodoDocument>(id)
 
         if (!todo) {
