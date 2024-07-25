@@ -9,6 +9,7 @@ interface Todo {
 
 export default async function TodoList() {
   async function getTodos(): Promise<[Todo]> {
+    "use server";
     const response = await fetch("http://localhost:8080/api/todos");
     if (!response.ok) {
       throw new Error(
@@ -27,10 +28,10 @@ export default async function TodoList() {
   }
 
   return (
-    <>
+    <div className="p-4">
       {todos?.map((todo) => (
         <TodoView key={todo._id} {...todo} />
       ))}
-    </>
+    </div>
   );
 }
