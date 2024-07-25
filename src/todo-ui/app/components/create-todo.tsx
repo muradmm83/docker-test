@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createTodo } from "@/app/action";
+import { createTodoAction } from "@/app/action";
 
 export default function CreateTodoForm() {
   const [show, setShow] = useState(false);
@@ -9,7 +9,7 @@ export default function CreateTodoForm() {
   const hideForm = () => setShow(false);
 
   const submitAction = async (formData: FormData) => {
-    const res = await createTodo(formData);
+    const res = await createTodoAction(formData);
     if (res?.error) {
       console.error(`Error addiing TODO: ${res.error}`);
     } else {
