@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply bg-slate-800 h-screen;
+  }
+}
+
+@layer utilities {
+  .btn {
+    @apply bg-white text-sky-500 p-1 rounded hover:text-white hover:bg-sky-500 transition-all 
+        ease-linear duration-200;
+  }
+
+  .floating-btn {
+    @apply text-white rounded-full bg-sky-500 w-12 h-12 text-3xl;
+  }
+}
