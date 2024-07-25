@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
 import clsx from "clsx";
-import { FaRegCheckCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaCheck } from "react-icons/fa";
 import { MdOutlineRadioButtonUnchecked, MdDeleteForever } from "react-icons/md";
+import { IoCloseSharp } from "react-icons/io5";
+import { removeTodoAction } from "@/app/action";
 
 interface TodoProps {
   _id: string;
   title: string;
   desc: string;
   completed?: boolean;
+  shouldDelete: boolean;
+  resetDelete: any;
+  markForDelete: any;
+  updateTodos: any;
 }
 
 export default function Todo({
@@ -16,11 +22,21 @@ export default function Todo({
   title,
   desc,
   completed = false,
+  shouldDelete,
+  resetDelete,
+  markForDelete,
+  updateTodos,
 }: TodoProps) {
+  const removeTodo = (id: string) => {
+    removeTodoAction(id);
+    updateTodos();
+  };
+
   return (
     <div
-      className={clsx("flex items-center my-4", {
+      className={clsx("flex items-center my-4 p-2", {
         "text-gray-400": completed,
+        "border-red-300 border-2": shouldDelete,
       })}
     >
       <button
@@ -34,13 +50,34 @@ export default function Todo({
         <label>{title}</label>
         <p className="grow text-xs">{desc}</p>
       </div>
-      <button
-        className="justify-self-end text-sky-500 text-2xl"
-        title="Delete"
-        onClick={() => alert(`Removing ${_id}`)}
-      >
-        <MdDeleteForever />
-      </button>
+      <div className="justify-self-end text-sky-500 text-xl">
+        {shouldDelete ? (
+          <>
+            <button
+              className="justify-self-end mr-2 text-red-600"
+              title="Delete"
+              onClick={() => removeTodo(_id)}
+            >
+              <FaCheck />
+            </button>
+            <button
+              className="justify-self-end text-red-600"
+              title="Delete"
+              onClick={() => resetDelete()}
+            >
+              <IoCloseSharp />
+            </button>
+          </>
+        ) : (
+          <button
+            className="justify-self-end"
+            title="Delete"
+            onClick={() => markForDelete()}
+          >
+            <MdDeleteForever />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

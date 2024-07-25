@@ -1,37 +1,42 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import TodoView from "@/app/components/todo";
+import { Todo } from "@/app/components/models";
+import { getTodosAction } from "@/app/action";
 
-interface Todo {
-  _id: string;
-  title: string;
-  desc: string;
-  completed?: boolean;
-}
+export default function TodoList() {
+  const [update, setUpdate] = useState(false);
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [deleteId, setDeleteForId] = useState<string>("");
 
-export default async function TodoList() {
-  async function getTodos(): Promise<[Todo]> {
-    "use server";
-    const response = await fetch("http://localhost:8080/api/todos");
-    if (!response.ok) {
-      throw new Error(
-        `Failed to get TODOs: HTTP Status ${response.status} ${response.statusText}`
-      );
-    }
-    return (await response.json()).data as [Todo];
-  }
+  const resetDelete = () => setDeleteForId("");
 
-  let todos: [Todo] | null = null;
+  const getTodos = async () => {
+    setTodos(await getTodosAction());
+  };
 
-  try {
-    todos = await getTodos();
-  } catch (error) {
-    console.error(error);
-  }
+  useEffect(() => {
+    console.log("[todoList - useEffect] ::", update);
+    getTodos();
+  }, [update]);
 
   return (
     <div className="p-4">
-      {todos?.map((todo) => (
-        <TodoView key={todo._id} {...todo} />
-      ))}
+      {todos.length ? (
+        todos.map((todo) => (
+          <TodoView
+            key={todo._id}
+            {...todo}
+            resetDelete={resetDelete}
+            shouldDelete={todo._id === deleteId}
+            markForDelete={() => setDeleteForId(todo._id)}
+            updateTodos={() => setUpdate((p) => !p)}
+          />
+        ))
+      ) : (
+        <span className="text-3xl">You've got nothing to do 😉</span>
+      )}
     </div>
   );
 }
