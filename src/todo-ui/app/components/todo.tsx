@@ -14,7 +14,6 @@ interface TodoProps {
   shouldDelete: boolean;
   resetDelete: any;
   markForDelete: any;
-  updateTodos: any;
 }
 
 export default function Todo({
@@ -25,13 +24,7 @@ export default function Todo({
   shouldDelete,
   resetDelete,
   markForDelete,
-  updateTodos,
 }: TodoProps) {
-  const removeTodo = (id: string) => {
-    removeTodoAction(id);
-    updateTodos();
-  };
-
   return (
     <div
       className={clsx("flex items-center my-4 p-2", {
@@ -56,7 +49,7 @@ export default function Todo({
             <button
               className="justify-self-end mr-2 text-red-600"
               title="Delete"
-              onClick={() => removeTodo(_id)}
+              onClick={() => removeTodoAction(_id)}
             >
               <FaCheck />
             </button>

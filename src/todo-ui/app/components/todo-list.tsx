@@ -1,25 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TodoView from "@/app/components/todo";
 import { Todo } from "@/app/components/models";
-import { getTodosAction } from "@/app/action";
 
-export default function TodoList() {
-  const [update, setUpdate] = useState(false);
-  const [todos, setTodos] = useState<Todo[]>([]);
+interface TodoListProps {
+  todos: Todo[];
+}
+
+export default function TodoList({ todos }: TodoListProps) {
   const [deleteId, setDeleteForId] = useState<string>("");
 
   const resetDelete = () => setDeleteForId("");
-
-  const getTodos = async () => {
-    setTodos(await getTodosAction());
-  };
-
-  useEffect(() => {
-    console.log("[todoList - useEffect] ::", update);
-    getTodos();
-  }, [update]);
 
   return (
     <div className="p-4">
@@ -31,7 +23,6 @@ export default function TodoList() {
             resetDelete={resetDelete}
             shouldDelete={todo._id === deleteId}
             markForDelete={() => setDeleteForId(todo._id)}
-            updateTodos={() => setUpdate((p) => !p)}
           />
         ))
       ) : (
