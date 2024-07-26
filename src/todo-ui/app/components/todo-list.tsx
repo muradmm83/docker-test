@@ -26,7 +26,7 @@ export default function TodoList({ todos }: TodoListProps) {
           />
         ))
       ) : (
-        <span className="text-3xl">You've got nothing to do 😉</span>
+        <span className="text-xl">You've got nothing to do 😉</span>
       )}
     </div>
   );
