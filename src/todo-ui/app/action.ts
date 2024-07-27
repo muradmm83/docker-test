@@ -17,7 +17,7 @@ export async function createTodoAction(formData: FormData): Promise<any> {
       body: JSON.stringify({
         title,
         desc,
-        completed: completed === "completed",
+        completed: completed === "on",
       }),
     });
 
