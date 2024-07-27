@@ -1,12 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createTodoAction } from "@/app/action";
+import {
+  Modal,
+  Button,
+  TextInput,
+  Textarea,
+  ToggleSwitch,
+} from "flowbite-react";
 
 export default function CreateTodoForm() {
   const [show, setShow] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const showForm = () => setShow(true);
-  const hideForm = () => setShow(false);
+  const hideForm = () => {
+    setIsCompleted(false);
+    setShow(false);
+  };
+  const formRef = useRef<HTMLFormElement>(null);
 
   const submitAction = async (formData: FormData) => {
     const res = await createTodoAction(formData);
@@ -17,46 +29,42 @@ export default function CreateTodoForm() {
     }
   };
 
-  return show ? (
-    <form
-      action={submitAction}
-      className="grid gap-1 grid-cols-4 p-2 rounded border-2 border-slate-500"
-    >
-      <label className="text-xl col-span-3">New TODO</label>
-      <button className="btn justify-self-end" onClick={() => hideForm()}>
-        X
+  return (
+    <>
+      <Modal show={show} onClose={hideForm}>
+        <Modal.Header>Create New TODO</Modal.Header>
+        <Modal.Body>
+          <form action={submitAction} className="flex flex-col" ref={formRef}>
+            <label>Title</label>
+            <TextInput id="title" name="title" />
+            <div className="my-4">
+              <label>Description</label>
+              <Textarea id="desc" name="desc" />
+            </div>
+            <div className="flex">
+              <ToggleSwitch
+                id="completed"
+                name="completed"
+                checked={isCompleted}
+                onChange={(checked) => setIsCompleted(checked)}
+              />
+              <label className="ml-1">Is Completed</label>
+            </div>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => formRef?.current?.requestSubmit()}>OK</Button>
+          <Button color="gray" onClick={hideForm}>
+            Cancel
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <button
+        className="floating-btn fixed top-[90%] left-1/2"
+        onClick={() => showForm()}
+      >
+        +
       </button>
-      <label>Title</label>
-      <input
-        id="title"
-        name="title"
-        type="text"
-        className="border-2 col-span-3 border-slate-500 focus:border-sky-500 default:border-sky-500 outline-none"
-      />
-      <label>Description</label>
-      <textarea
-        id="desc"
-        name="desc"
-        className="border-2 col-span-3 border-slate-500  focus:border-sky-500 default:border-sky-500 outline-none"
-      ></textarea>
-      <div className="col-span-2">
-        <input
-          id="completed"
-          name="completed"
-          type="checkbox"
-          value="completed"
-        />
-        <label className="ml-1">Is Completed</label>
-      </div>
-      <button type="submit" className="col-span-4 justify-self-end btn">
-        Add
-      </button>
-    </form>
-  ) : (
-    <button 
-    className="floating-btn fixed top-[90%] left-1/2" 
-    onClick={() => showForm()}>
-      +
-    </button>
+    </>
   );
 }
