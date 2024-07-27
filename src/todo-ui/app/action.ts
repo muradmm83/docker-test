@@ -45,14 +45,19 @@ export async function removeTodoAction(id: string) {
   }
 }
 
-export async function getTodosAction(): Promise<[Todo]> {
-  const response = await fetch("http://localhost:8080/api/todos");
-  if (!response.ok) {
-    throw new Error(
-      `Failed to get TODOs: HTTP Status ${response.status} ${response.statusText}`
-    );
+export async function getTodosAction(): Promise<[Todo] | []> {
+  try {
+    const response = await fetch("http://localhost:8080/api/todos");
+    if (!response.ok) {
+      throw new Error(
+        `Failed to get TODOs: HTTP Status ${response.status} ${response.statusText}`
+      );
+    }
+    return (await response.json()).data as [Todo];
+  } catch (error) {
+    console.error(`Error Fetching TODOs: ${error}`);
+    return [];
   }
-  return (await response.json()).data as [Todo];
 }
 
 export async function toggleTodoAction({
