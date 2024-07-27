@@ -54,3 +54,28 @@ export async function getTodosAction(): Promise<[Todo]> {
   }
   return (await response.json()).data as [Todo];
 }
+
+export async function toggleTodoAction({
+  _id,
+  title,
+  desc,
+  completed,
+}: Todo): Promise<void> {
+  const response = await fetch(`http://localhost:8080/api/todos/${_id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+      desc,
+      completed: !completed,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Failed to get TODOs: HTTP Status ${response.status} ${response.statusText}`
+    );
+  }
+  revalidatePath("/");
+}

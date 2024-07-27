@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { FaRegCheckCircle, FaCheck } from "react-icons/fa";
 import { MdOutlineRadioButtonUnchecked, MdDeleteForever } from "react-icons/md";
 import { IoCloseSharp } from "react-icons/io5";
-import { removeTodoAction } from "@/app/action";
+import { removeTodoAction, toggleTodoAction } from "@/app/action";
 
 interface TodoProps {
   _id: string;
@@ -33,6 +33,7 @@ export default function Todo({
       })}
     >
       <button
+        onClick={() => toggleTodoAction({ _id, title, desc, completed })}
         className={clsx("justify-self-start", {
           "text-green-500": completed,
         })}
