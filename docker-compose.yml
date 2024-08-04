@@ -1,14 +1,35 @@
 services:
- mongo:
-  image: mongo:4.0.8
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: murad
-    MONGO_INITDB_ROOT_PASSWORD: murad  
- 
- todo:
-  build:
-   context: ./src/api
-  ports:
-    - 8080:3000
-  depends_on:
-    - mongo
+  mongo:
+    image: mongo:4.0.8
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: murad
+      MONGO_INITDB_ROOT_PASSWORD: murad
+    networks:
+      - backend
+
+  todo:
+    build:
+      context: ./src/api
+    ports:
+      - 8080:3000
+    depends_on:
+      - mongo
+    networks:
+      - backend
+      - frontend
+
+  todo-ui:
+    build:
+      context: ./src/todo-ui
+    ports:
+      - 8081:3000
+    depends_on:
+      - todo
+    networks:
+      - frontend
+    environment:
+      - API_BASE_URI=http://todo:8080
+
+networks:
+  backend:
+  frontend:
