@@ -1,4 +1,4 @@
-FROM node:lts-slim as build
+FROM node:lts-slim AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm run build-prod
 
-FROM node:lts-slim as deploy
+FROM node:lts-slim AS deploy
 
 WORKDIR /app
 
