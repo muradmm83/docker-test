@@ -1,8 +1,6 @@
 import express, { Response } from 'express'
 import 'dotenv/config'
 
-console.log('Environment', process.env);
-
 import todoController from './controllers/todoControllers'
 import './db'
 
