@@ -49,9 +49,7 @@ export async function removeTodoAction(id: string) {
 
 export async function getTodosAction(): Promise<[Todo] | []> {
   try {
-    const response = await fetch(`${API_BASE_URI}/api/todos`, {
-      cache: "no-cache",
-    });
+    const response = await fetch(`${API_BASE_URI}/api/todos`);
 
     if (!response.ok) {
       throw new Error(
