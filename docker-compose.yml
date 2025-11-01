@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: mongo:4.0.8
+    image: mongo:6.0
     environment:
       MONGO_INITDB_ROOT_USERNAME: murad
       MONGO_INITDB_ROOT_PASSWORD: murad
